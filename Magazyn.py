@@ -7,7 +7,8 @@ cargo = [{"Name" : "flavour", "Quantity" : 11000, "Unit" : "kg", "Price per unit
 sold_cargo=[]
 
 
-
+def round_to_two(num_to_round):
+    return round(num_to_round,2)
 
 def get_cost(list_of_cargo):
     total_value=0
@@ -80,9 +81,9 @@ def our_storage(command : str, cargo: list):
             get_cargo()
         case ["revenue" | "result" | "balance"]:
             print("Values are in PLN")
-            print("Total income: ",get_income())
-            print("Cost: ", get_cost(cargo))
-            print("Revenue: ",show_revenue())
+            print("Total income: ",round_to_two(get_income()))
+            print("Cost: ", round_to_two(get_cost(cargo)))
+            print("Revenue: ",round_to_two(show_revenue()))
         case ["exit" |"close"|"quit"]:
             print("We're closing app")
             exit()
