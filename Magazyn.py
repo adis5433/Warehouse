@@ -70,6 +70,7 @@ def export_items_to_csv():
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(cargo)
+        print("...succesfully saved data")
 
 def load_items_from_csv():
     list.clear(cargo)
@@ -78,6 +79,7 @@ def load_items_from_csv():
         for row in reader:
             cargo.append(row)
     get_cargo(cargo)
+    print("succesfilly data loaded")
     return cargo
 
 def our_storage(command : str, cargo: list):
@@ -114,6 +116,7 @@ def our_storage(command : str, cargo: list):
 
 
 if __name__ == "__main__":
+    load_items_from_csv()
     print("Welcome in our_storage app")
     while (True):
         print("Menu:\n"
