@@ -111,6 +111,9 @@ def our_storage(command : str, cargo: list):
             case ["exit" |"close"|"quit"]:
                 print("We're closing app")
                 exit()
+            case [_]:
+                print("Option not in menu. Please choose option from menu")
+
 
 
 
@@ -118,16 +121,19 @@ def our_storage(command : str, cargo: list):
 if __name__ == "__main__":
     load_items_from_csv()
     print("Welcome in our_storage app")
-    while (True):
-        print("Menu:\n"
-                "warehouse/ware/commodity/stuff.....show  current cargo in warehouse\n"
-                "+/add/storage......................add new cargo\n"
-                "-/sell/extradition/release.........sell cargo\n"
-                "revenue/result/balance.............show current balance\n"
-                "save...............................save changes\n"
-                "load...............................load file with data\n"
-                "exit/close/quit....................exit program\n"
-                "What you want to do?")
-        command = input("$ ")
-        our_storage(command,cargo)
+    while True:
+        try:
+            print("Menu:\n"
+                    "warehouse/ware/commodity/stuff.....show  current cargo in warehouse\n"
+                    "+/add/storage......................add new cargo\n"
+                    "-/sell/extradition/release.........sell cargo\n"
+                    "revenue/result/balance.............show current balance\n"
+                    "save...............................save changes\n"
+                    "load...............................load file with data\n"
+                    "exit/close/quit....................exit program\n"
+                    "What do you want to do?")
+            command = input("$ ")
+            our_storage(command,cargo)
+        except ValueError:
+            print("Incorrect value!")
 
