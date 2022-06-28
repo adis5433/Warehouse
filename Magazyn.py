@@ -47,6 +47,7 @@ def add_cargo(item:str ,quantity: int,unit: str,value: int,list):
     list.append(add_stuff)
     return add_stuff
 
+#funkcja update_sold_cargo przekazuje ilość sprzedanch do listy sold_cardo towarów żeby później obliczyć przychód
 def update_sold_cargo(cargo_to_sell,sell_quantity):
     value_to_update = copy.deepcopy(cargo_to_sell)
     value_to_update["Quantity"] = sell_quantity
