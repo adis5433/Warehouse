@@ -47,22 +47,28 @@ def add_cargo(item:str ,quantity: int,unit: str,value: int,list):
     list.append(add_stuff)
     return add_stuff
 
-def sell_cargo(stuff_to_sell, sell_quantity, list_of_cargo = cargo,list_of_sold_items = sold_cargo):
-    state_to_change = get_elem(stuff_to_sell,list_of_cargo)
-    unit = state_to_change["Unit"]
-    id_of_sold_cargo =list_of_cargo.index(state_to_change)
-    new_value = copy.deepcopy(state_to_change)
-    new_value["Quantity"]=sell_quantity
-    list_of_sold_items.append(new_value)
-    state_to_change["Quantity"] = int(state_to_change["Quantity"])-int(sell_quantity)
-    list_of_cargo[id_of_sold_cargo]=state_to_change
-    left_quantity = list_of_cargo[id_of_sold_cargo]["Quantity"]
-    return f"afret sell {sell_quantity} {unit} of {stuff_to_sell} in storage left {left_quantity} kg"
+def update_sold_cargo(cargo_to_sell,sell_quantity):
+    value_to_update = copy.deepcopy(cargo_to_sell)
+    value_to_update["Quantity"] = sell_quantity
+    sold_cargo.append(value_to_update)
 
 def get_elem(name_of_cargo,list):
     for item in list:
         if item['Name'] == name_of_cargo:
             return item
+
+
+def sell_cargo(stuff_to_sell, sell_quantity):
+    cargo_to_sell = get_elem(stuff_to_sell,cargo)
+    unit_of_cargo_to_sell = cargo_to_sell["Unit"]
+    id_of_sold_cargo = cargo.index(cargo_to_sell)
+    update_sold_cargo(cargo_to_sell,sell_quantity)
+    cargo_to_sell["Quantity"] = int(cargo_to_sell["Quantity"])-int(sell_quantity)
+    cargo[id_of_sold_cargo] = cargo_to_sell
+    left_quantity = cargo[id_of_sold_cargo]["Quantity"]
+    return f"afret sell {sell_quantity} {unit_of_cargo_to_sell} of {stuff_to_sell} in storage left {left_quantity} kg"
+
+
 
 def export_items_to_csv():
     with open('magazyn.csv', 'w', newline='') as csvfile:
