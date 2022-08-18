@@ -1,5 +1,50 @@
-import csv
+import json
 import copy
+from subprocess import call
+from unicodedata import name
+import pandas as pd
+
+
+ITEMS={}
+
+class Product:
+    next_item_id = 1
+    def __init__(self, name, quantity, unit, unit_price):
+        self.name = name
+        self.quantity = quantity
+        self.unit = unit
+        self.unit_price = unit_price
+        self.item_id = Product.next_item_id
+        Product.next_item_id +=1
+        ITEMS[self.name]=(self)
+    
+    
+    def sell_cargo(self, sell_quantity):
+        quantity_after_sell = self.quantity - sell_quantity
+        self.quantity = quantity_after_sell
+        income_from_cargo_sale = sell_quantity * self.unit_price
+        return f"new quantity of product = {self.quantity} and income from sale ={income_from_cargo_sale}"
+
+first_item=Product("milk" ,12000, "l", 3)
+second_item=Product("flavour" ,11000, "kg", 2)
+third_item=Product("sugar" ,30000, "kg", 4)
+fourth_item=Product("salt" ,25000, "kg", 3)
+fifth_item=Product("pepper" ,70000, "kg", 3)
+
+
+
+
+dict_ITEMS=[(ITEMS[item].__dict__)for item in ITEMS]
+
+
+print(type(dict_ITEMS[0]))
+
+
+
+
+
+
+
 
 cargo = [{"Name" : "flavour", "Quantity" : 11000, "Unit" : "kg", "Price per unit": 2},
          {"Name" : "sugar", "Quantity" : 30000, "Unit" : "kg", "Price per unit": 4},
@@ -89,58 +134,5 @@ def load_items_from_csv():
     print("succesfilly data loaded")
     return cargo
 
-def our_storage(command : str, cargo: list):
-        match command.split():
-            case ["warehouse" |"ware"|"commodity"|"stuff"]:
-                print(get_cargo(cargo))
-            case ["+"|"add" |"storage"]:
-                name_of_cargo = input("what cargo we add...")
-                unit = input("what is unit of measure...")
-                quantity = int(input(f"how much of {unit} {name_of_cargo} we add..."))
-                value_of_cargo = int(input(f"what value per {unit} for {name_of_cargo}..."))
-                print(f"adding {quantity}{unit} of {name_of_cargo}")
-                print(add_cargo(name_of_cargo, quantity, unit,value_of_cargo, cargo))
-            case ["-"|"sell" |"extradition"|"release"]:
-                stuff_to_sell = input("what you want tu sell: ")
-                sell_quantity = int(input(f"How much of {stuff_to_sell} you want to sell: "))
-                print(f"selling {sell_quantity} kg of {stuff_to_sell}")
-                print(sell_cargo(stuff_to_sell,sell_quantity))
-                get_cargo()
-            case ["revenue" | "result" | "balance"]:
-                print("Values are in PLN")
-                print("Total income: ",round_to_two(get_income()))
-                print("Cost: ", round_to_two(get_cost(cargo)))
-                print("Revenue: ",round_to_two(show_revenue()))
-            case ["save"]:
-                export_items_to_csv()
-            case ["load"]:
-                load_items_from_csv()
-            case ["exit" |"close"|"quit"]:
-                print("We're closing app")
-                exit()
-            case [_]:
-                print("Option not in menu. Please choose option from menu")
 
-
-
-
-
-if __name__ == "__main__":
-    load_items_from_csv()
-    print("Welcome in our_storage app")
-    while True:
-        try:
-            print("Menu:\n"
-                    "warehouse/ware/commodity/stuff.....show  current cargo in warehouse\n"
-                    "+/add/storage......................add new cargo\n"
-                    "-/sell/extradition/release.........sell cargo\n"
-                    "revenue/result/balance.............show current balance\n"
-                    "save...............................save changes\n"
-                    "load...............................load file with data\n"
-                    "exit/close/quit....................exit program\n"
-                    "What do you want to do?")
-            command = input("$ ")
-            our_storage(command,cargo)
-        except ValueError:
-            print("Incorrect value!")
 

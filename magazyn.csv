@@ -1,7 +1,6 @@
-Name,Quantity,Unit,Price per unit
-flavour,11000,kg,4
-sugar,26000,kg,7
-salt,22000,kg,3
-pepper,63000,kg,1
-coffee,4000,kg,19
-ham,100,kg,15
+name,quantity,unit,unit_price,item_id
+milk,12000,l,3,1
+flavour,11000,kg,2,2
+sugar,30000,kg,4,3
+salt,25000,kg,3,4
+pepper,70000,kg,3,5
