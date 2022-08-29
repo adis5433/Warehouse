@@ -1,0 +1,40 @@
+{% extends "base.html"%}
+{% block content %}
+<h2>Current list of cargo</h2>
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Quantity</th>
+          <th>Unit</th>
+          <th>Unit price</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {%for item in list_of_products%}
+          <tr>
+            <td>{{list_of_products[item].item_id}}</td>
+            <td>{{list_of_products[item].name}}</td>
+            <td>{{list_of_products[item].quantity}}</td>
+            <td>{{list_of_products[item].unit}}</td>
+            <td>{{list_of_products[item].unit_price}}</td>
+            <td><form action = "{{url_for('sell_cargo', cargo_name = list_of_products[item].name )}}" method = "POST" ><input type="submit" value="Sell cargo"></form></td>
+          </tr>
+          {%endfor%}
+          <tr>
+            <form method="post" action="/cargo">
+              <td></td>
+              <td>{{form.name}}</td>
+              <td>{{form.quantity}}</td>
+              <td>{{form.unit}}</td>
+              <td>{{form.unit_price}}</td>
+              <td><input type="submit" value="Add cargo"></td>
+            </form>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
